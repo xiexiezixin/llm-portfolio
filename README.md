@@ -1,16 +1,3 @@
-# llm-portfolio
-# llm-portfolio
-
-LLM learning & project portfolio.
-
-## Contents
-- 📚 Notes: study notes and summaries
-- 🧪 Projects: hands-on demos (RAG / fine-tuning / eval)
-- 🧰 Utils: reusable scripts and helpers
-
-## Roadmap
-- [ ] Transformer basics
-- [ ] Prompt engineering + evaluation
-- [ ] RAG mini project
-- [ ] Fine-tuning (LoRA)
-- [ ] Safety & alignment notes
+• 项目目标：12周做 RAG + LoRA
+• 环境：Python版本、PyTorch版本
+• 运行：python src/torch_check.py
