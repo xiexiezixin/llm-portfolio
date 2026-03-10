@@ -1,0 +1,20 @@
+{"qid": 1, "question": "顺轨干涉ATI可反演什么物理量？", "must_include": ["径向流速", "视线"]}
+{"qid": 2, "question": "交轨干涉XTI对什么参数敏感？", "must_include": ["SSH", "海面高度"]}
+{"qid": 3, "question": "残余基线误差会对干涉相位带来什么影响？", "must_include": ["低频", "系统性", "降低"]}
+{"qid": 4, "question": "本文方法的子孔径划分依据是什么？", "must_include": ["主能量", "多普勒"]}
+{"qid": 5, "question": "子孔径差分干涉相位累加的目的是什么？", "must_include": ["稳健", "敏感", "弱耦合"]}
+{"qid": 6, "question": "顺轨干涉ATI可反演什么物理量？", "must_include": ["径向流速", "视线"]}
+{"qid": 7, "question": "交轨干涉XTI对什么参数敏感？", "must_include": ["SSH", "海面高度"]}
+{"qid": 8, "question": "残余基线误差会对干涉相位带来什么影响？", "must_include": ["低频", "系统性", "降低"]}
+{"qid": 9, "question": "本文方法的子孔径划分依据是什么？", "must_include": ["主能量", "多普勒"]}
+{"qid": 10, "question": "子孔径差分干涉相位累加的目的是什么？", "must_include": ["稳健", "敏感", "弱耦合"]}
+{"qid": 11, "question": "顺轨干涉ATI可反演什么物理量？", "must_include": ["径向流速", "视线"]}
+{"qid": 12, "question": "交轨干涉XTI对什么参数敏感？", "must_include": ["SSH", "海面高度"]}
+{"qid": 13, "question": "残余基线误差会对干涉相位带来什么影响？", "must_include": ["低频", "系统性", "降低"]}
+{"qid": 14, "question": "本文方法的子孔径划分依据是什么？", "must_include": ["主能量", "多普勒"]}
+{"qid": 15, "question": "子孔径差分干涉相位累加的目的是什么？", "must_include": ["稳健", "敏感", "弱耦合"]}
+{"qid": 16, "question": "顺轨干涉ATI可反演什么物理量？", "must_include": ["径向流速", "视线"]}
+{"qid": 17, "question": "交轨干涉XTI对什么参数敏感？", "must_include": ["SSH", "海面高度"]}
+{"qid": 18, "question": "残余基线误差会对干涉相位带来什么影响？", "must_include": ["低频", "系统性", "降低"]}
+{"qid": 19, "question": "本文方法的子孔径划分依据是什么？", "must_include": ["主能量", "多普勒"]}
+{"qid": 20, "question": "子孔径差分干涉相位累加的目的是什么？", "must_include": ["稳健", "敏感", "弱耦合"]}
