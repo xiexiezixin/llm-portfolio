@@ -57,10 +57,10 @@ def save_jsonl(chunks: List[Dict], out_path: Path, source: str):
 
 def main():
     parser = argparse.ArgumentParser(description="Simple text chunker for txt/md files.")
-    parser.add_argument("--input", type=str, default="data/sample.txt", help="Path to input .txt/.md")
+    parser.add_argument("--input", type=str, default="../src/data/sample.txt", help="Path to input .txt/.md")
     parser.add_argument("--chunk_size", type=int, default=200, help="Chars per chunk")
     parser.add_argument("--overlap", type=int, default=100, help="Overlap chars between chunks")
-    parser.add_argument("--out", type=str, default="outputs/chunks.jsonl", help="Output jsonl path")
+    parser.add_argument("--out", type=str, default="../src/outputs/chunks.jsonl", help="Output jsonl path")
     args = parser.parse_args()
 
     in_path = Path(args.input)

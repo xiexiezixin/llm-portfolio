@@ -31,10 +31,10 @@ def save_meta(metas, out_path: Path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--chunks", type=str, default="outputs/chunks.jsonl")
-    ap.add_argument("--out_vec", type=str, default="outputs/tfidf_vectorizer.joblib")
-    ap.add_argument("--out_mat", type=str, default="outputs/tfidf_matrix.joblib")
-    ap.add_argument("--out_meta", type=str, default="outputs/meta.jsonl")
+    ap.add_argument("--chunks", type=str, default="../src/outputs/chunks.jsonl")
+    ap.add_argument("--out_vec", type=str, default="../src/outputs/tfidf_vectorizer.joblib")
+    ap.add_argument("--out_mat", type=str, default="../src/outputs/tfidf_matrix.joblib")
+    ap.add_argument("--out_meta", type=str, default="../src/outputs/meta.jsonl")
     args = ap.parse_args()
 
     metas, texts = load_chunks(Path(args.chunks))

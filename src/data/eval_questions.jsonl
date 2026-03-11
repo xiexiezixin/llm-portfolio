@@ -18,3 +18,8 @@
 {"qid": 18, "question": "残余基线误差会对干涉相位带来什么影响？", "must_include": ["低频", "系统性", "降低"]}
 {"qid": 19, "question": "本文方法的子孔径划分依据是什么？", "must_include": ["主能量", "多普勒"]}
 {"qid": 20, "question": "子孔径差分干涉相位累加的目的是什么？", "must_include": ["稳健", "敏感", "弱耦合"]}
+{"qid": 101, "question": "本文实验中雷达工作波长是多少？", "must_include": ["波长", "λ"], "answerable": false}
+{"qid": 102, "question": "本文数据的PRF具体是多少Hz？", "must_include": ["PRF", "Hz"], "answerable": false}
+{"qid": 103, "question": "平台飞行高度是多少米？", "must_include": ["高度", "km", "m"], "answerable": false}
+{"qid": 104, "question": "本文使用了哪种深度学习网络结构？", "must_include": ["CNN", "Transformer"], "answerable": false}
+{"qid": 105, "question": "本文在某某海域的具体经纬度是多少？", "must_include": ["经度", "纬度"], "answerable": false}

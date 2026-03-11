@@ -1,0 +1,10 @@
+chunk_size,overlap,topk,rule,hit_rate_answerable,false_hit_rate_unanswerable,answerable_total,unanswerable_total
+200,0,5,all,1.0,0.0,20,5
+200,50,5,all,1.0,0.0,20,5
+200,100,5,all,1.0,0.0,20,5
+400,0,5,all,1.0,0.0,20,5
+400,50,5,all,1.0,0.0,20,5
+400,100,5,all,1.0,0.0,20,5
+800,0,5,all,1.0,0.0,20,5
+800,50,5,all,1.0,0.0,20,5
+800,100,5,all,1.0,0.0,20,5
