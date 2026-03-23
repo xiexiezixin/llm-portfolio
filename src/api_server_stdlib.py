@@ -22,11 +22,26 @@ def _send_json(handler: BaseHTTPRequestHandler, status_code: int, obj):
     handler.send_response(status_code)
     handler.send_header("Content-Type", "application/json; charset=utf-8")
     handler.send_header("Content-Length", str(len(data)))
+
+    # --- CORS headers (关键) ---
+    handler.send_header("Access-Control-Allow-Origin", "*")
+    handler.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    handler.send_header("Access-Control-Allow-Headers", "Content-Type")
+    # --------------------------
+
     handler.end_headers()
     handler.wfile.write(data)
 
 
 class Handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        # 预检请求：浏览器在 POST application/json 前会先发 OPTIONS
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
     def do_GET(self):
         path = urlparse(self.path).path
         if path == "/health":

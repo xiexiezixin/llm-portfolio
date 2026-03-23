@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>RAG Demo (stdlib API)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; line-height: 1.45; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    input[type="text"] { width: min(820px, 100%); padding: 10px; font-size: 16px; }
+    button { padding: 10px 14px; font-size: 16px; cursor: pointer; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-top: 14px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid #ccc; margin-right: 8px; }
+    .ok { border-color: #6aa84f; }
+    .bad { border-color: #cc0000; }
+    details { margin-top: 10px; }
+    .muted { color: #666; }
+    .small { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h2>RAG Demo (no deps)</h2>
+  <div class="muted">Backend: <span class="mono">http://127.0.0.1:8000</span> — endpoints: <span class="mono">/health</span>, <span class="mono">/query</span></div>
+
+  <div class="card">
+    <div class="row">
+      <input id="q" type="text" placeholder="输入问题，例如：顺轨干涉ATI可反演什么物理量？" />
+      <label>topk:
+        <input id="topk" type="number" value="5" min="1" max="20" style="width:80px; padding:8px;">
+      </label>
+      <button id="ask">查询</button>
+      <button id="health">health</button>
+    </div>
+    <div id="status" class="small muted" style="margin-top:10px;"></div>
+  </div>
+
+  <div id="result" class="card" style="display:none;"></div>
+
+  <script>
+    const baseUrl = "http://127.0.0.1:8000";
+
+    function escapeHtml(s) {
+      return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+    }
+
+    async function checkHealth() {
+      const el = document.getElementById("status");
+      el.textContent = "Checking /health ...";
+      try {
+        const r = await fetch(`${baseUrl}/health`);
+        const j = await r.json();
+        el.textContent = `health: ${JSON.stringify(j)}`;
+      } catch (e) {
+        el.textContent = `health failed: ${e}`;
+      }
+    }
+
+    function renderResponse(resp) {
+      const box = document.getElementById("result");
+      box.style.display = "block";
+
+      const mode = resp.mode || "UNKNOWN";
+      const tagClass = (mode === "RAG_PROMPT") ? "ok" : "bad";
+
+      const top = `
+        <div>
+          <span class="tag ${tagClass}"><b>mode</b>: ${escapeHtml(mode)}</span>
+          <span class="tag"><b>top1_score</b>: ${Number(resp.top1_score).toFixed(4)}</span>
+          <span class="tag"><b>threshold</b>: ${Number(resp.threshold).toFixed(4)}</span>
+          <span class="tag"><b>topk</b>: ${resp.topk}</span>
+        </div>
+        <div class="muted small" style="margin-top:8px;">
+          <b>query</b>: ${escapeHtml(resp.query || "")}
+        </div>
+      `;
+
+      const retrieved = (resp.retrieved || []).map(r => {
+        return `
+          <div class="card">
+            <div class="small">
+              <span class="tag"><b>#${r.rank}</b></span>
+              <span class="tag">chunk_id=${r.chunk_id}</span>
+              <span class="tag">score=${Number(r.score).toFixed(4)}</span>
+              <span class="muted">source=${escapeHtml(r.source || "")} span=[${(r.span||[]).join(", ")}]</span>
+            </div>
+            <div class="mono small" style="margin-top:8px;">${escapeHtml(r.preview || "")}</div>
+          </div>
+        `;
+      }).join("");
+
+      const prompt = `
+        <details>
+          <summary><b>prompt / refusal message</b> (click to expand)</summary>
+          <div class="mono" style="margin-top:10px;">${escapeHtml(resp.prompt || "")}</div>
+        </details>
+      `;
+
+      const raw = `
+        <details>
+          <summary><b>raw JSON</b> (click to expand)</summary>
+          <div class="mono small" style="margin-top:10px;">${escapeHtml(JSON.stringify(resp, null, 2))}</div>
+        </details>
+      `;
+
+      box.innerHTML = `
+        ${top}
+        <h3 style="margin-top:14px;">Retrieved chunks</h3>
+        ${retrieved || '<div class="muted">No retrieved items.</div>'}
+        ${prompt}
+        ${raw}
+      `;
+    }
+
+    async function ask() {
+      const q = document.getElementById("q").value.trim();
+      const topk = parseInt(document.getElementById("topk").value || "5", 10);
+      const status = document.getElementById("status");
+      const result = document.getElementById("result");
+
+      if (!q) {
+        status.textContent = "请输入问题。";
+        return;
+      }
+
+      status.textContent = "Querying /query ...";
+      result.style.display = "none";
+
+      try {
+        const r = await fetch(`${baseUrl}/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: q, topk: topk })
+        });
+
+        const resp = await r.json();
+        status.textContent = `done. next_action=${resp.next_action || ""}`;
+        renderResponse(resp);
+      } catch (e) {
+        status.textContent = `query failed: ${e}`;
+      }
+    }
+
+    document.getElementById("ask").addEventListener("click", ask);
+    document.getElementById("health").addEventListener("click", checkHealth);
+
+    // 快捷键：Enter 直接查询
+    document.getElementById("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") ask();
+    });
+  </script>
+</body>
+</html>
